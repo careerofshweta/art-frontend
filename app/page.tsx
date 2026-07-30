@@ -1,5 +1,5 @@
-import { AdminApp } from "@/components/admin-app";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <AdminApp slug="dashboard" />;
+  redirect("/dashboard");
 }
