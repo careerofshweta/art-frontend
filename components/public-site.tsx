@@ -13,6 +13,7 @@ const nav = [
   ["Competitions", "/competitions"],
   ["Gallery", "/gallery"],
   ["Winners", "/gallery"],
+  ["News", "/news"],
   ["Resources", "/downloads"],
   ["Contact", "/contact"],
 ];
@@ -42,6 +43,9 @@ export function HomePage() {
             <span>{label}</span>
           </div>
         ))}
+      </section>
+      <section className="home-competitions" id="competitions">
+        <CompetitionListing />
       </section>
     </Shell>
   );
@@ -225,10 +229,10 @@ function CompetitionCard({ item }: { item: (typeof competitions)[number] }) {
       <div>
         <h3>{item.title}</h3>
         <p>{item.category}</p>
-        <small>Entry Fee</small>
+        <small><Icon name="pin" /> {item.date}</small>
         <b>{item.entryFee}</b>
         <div className="comp-actions">
-          <Link href={`/competitions/${item.slug}`} className="btn-ghost">Details</Link>
+          <Link href={`/competitions/${item.slug}`} className="btn-ghost" aria-label={`${item.title} details`}><Icon name="card" /></Link>
           <Link href="/register" className="btn-primary mini">{item.button}</Link>
         </div>
       </div>
