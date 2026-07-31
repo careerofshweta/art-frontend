@@ -6,7 +6,8 @@ import { artImages, categories, competitions, downloads, gallery, news } from "@
 import { cn } from "@/lib/utils";
 import { Icon } from "./icons";
 
-type PublicPage = "competitions" | "gallery" | "downloads" | "contact" | "verify-certificate" | "track-registration" | "news" | "about" | "terms" | "privacy";
+type CanonicalPublicPage = "competitions" | "gallery" | "downloads" | "contact" | "verify-certificate" | "track-registration" | "news" | "about" | "terms" | "privacy";
+type PublicPage = CanonicalPublicPage | "track-your-status" | "news-blog" | "terms-conditions" | "privacy-policy";
 
 const nav = [
   ["Home", "/"],
@@ -55,18 +56,19 @@ export function HomePage() {
 }
 
 export function PublicPageView({ page }: { page: PublicPage }) {
+  const normalizedPage: CanonicalPublicPage = pageAliases[page] || (page as CanonicalPublicPage);
   return (
-    <Shell pageNo={pageLabels[page].no}>
-      {page === "competitions" && <CompetitionListing />}
-      {page === "gallery" && <GalleryPage />}
-      {page === "downloads" && <DownloadsPage />}
-      {page === "contact" && <ContactPage />}
-      {page === "verify-certificate" && <VerifyCertificate />}
-      {page === "track-registration" && <TrackStatus />}
-      {page === "news" && <NewsListing />}
-      {page === "about" && <AboutPage />}
-      {page === "terms" && <TermsPage />}
-      {page === "privacy" && <PrivacyPage />}
+    <Shell pageNo={pageLabels[normalizedPage].no}>
+      {normalizedPage === "competitions" && <CompetitionListing />}
+      {normalizedPage === "gallery" && <GalleryPage />}
+      {normalizedPage === "downloads" && <DownloadsPage />}
+      {normalizedPage === "contact" && <ContactPage />}
+      {normalizedPage === "verify-certificate" && <VerifyCertificate />}
+      {normalizedPage === "track-registration" && <TrackStatus />}
+      {normalizedPage === "news" && <NewsListing />}
+      {normalizedPage === "about" && <AboutPage />}
+      {normalizedPage === "terms" && <TermsPage />}
+      {normalizedPage === "privacy" && <PrivacyPage />}
     </Shell>
   );
 }
@@ -293,7 +295,7 @@ function ContactPage() {
           <button className="btn-primary full">Send Message</button>
         </form>
       </section>
-      <img className="map-shot" src={artImages.map} alt="Map" />
+      <div className="map-shot" aria-label="Map showing ArtCompete office location"><span></span></div>
     </>
   );
 }
@@ -324,7 +326,16 @@ function TrackStatus() {
         <div className="status-tabs">{["By Registration Number", "By Email", "By Mobile Number"].map((tab, index) => <button className={index === 0 ? "active" : ""} key={tab}>{tab}</button>)}</div>
         <label>Registration Number</label>
         <div className="search-row"><input placeholder="Enter registration number" /><button className="btn-primary">Search</button></div>
-        <div className="status-art"><Icon name="card" /></div>
+        <div className="status-art" aria-hidden="true">
+          <i className="status-shape left"></i>
+          <i className="status-shape right"></i>
+          <div className="status-board">
+            <span className="status-clip"></span>
+            <span className="status-row one"></span>
+            <span className="status-row two"></span>
+            <span className="status-row three"></span>
+          </div>
+        </div>
       </section>
     </>
   );
@@ -429,7 +440,14 @@ function InfoLine({ icon, title, text }: { icon: string; title: string; text: st
   return <div className="info-line"><Icon name={icon} /><div><b>{title}</b><p>{text}</p></div></div>;
 }
 
-const pageLabels: Record<PublicPage, { no: string }> = {
+const pageAliases: Partial<Record<PublicPage, CanonicalPublicPage>> = {
+  "track-your-status": "track-registration",
+  "news-blog": "news",
+  "terms-conditions": "terms",
+  "privacy-policy": "privacy",
+};
+
+const pageLabels: Record<CanonicalPublicPage, { no: string }> = {
   competitions: { no: "02. Competition Listing" },
   gallery: { no: "Gallery" },
   downloads: { no: "Downloads" },

@@ -8,10 +8,14 @@ const pages = [
   "contact",
   "verify-certificate",
   "track-registration",
+  "track-your-status",
   "news",
+  "news-blog",
   "about",
   "terms",
+  "terms-conditions",
   "privacy",
+  "privacy-policy",
 ] as const;
 
 export function generateStaticParams() {
