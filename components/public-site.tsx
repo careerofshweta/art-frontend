@@ -47,6 +47,9 @@ export function HomePage() {
       <section className="home-competitions" id="competitions">
         <CompetitionListing />
       </section>
+      <section className="home-gallery" id="gallery">
+        <GalleryPage />
+      </section>
     </Shell>
   );
 }
@@ -75,7 +78,7 @@ export function CompetitionDetails({ slug }: { slug: string }) {
       <PageTitle title="International Art Championship 2026" crumb="Home > Competition Details/international-art-championship-2026" small="Featured" />
       <section className="detail-layout">
         <main className="detail-main">
-          <img className="detail-image" src={artImages.city} alt={competition.title} />
+          <img className="detail-image" src={competition.image} alt={competition.title} />
           <h2>International Art Championship 2026</h2>
           <p className="muted">Join artists from around the world in our premier annual art competition. Showcase your creativity, gain international recognition, and win exciting prizes.</p>
           <div className="tabs">
@@ -244,7 +247,10 @@ function GalleryPage() {
   return (
     <>
       <PageTitle title="Gallery" crumb="Home > Gallery" />
-      <div className="gallery-tabs">{["Premium Exhibition", "Current Exhibition", "Award Winning"].map((tab, index) => <button className={index === 0 ? "active" : ""} key={tab}>{tab}</button>)}</div>
+      <div className="gallery-filter-panel">
+        <div className="gallery-tabs">{["Previous Exhibitions", "Current Exhibition", "Award Winning"].map((tab, index) => <button className={index === 0 ? "active" : ""} key={tab}>{tab}</button>)}</div>
+        <div className="gallery-years">{["All", "2025", "2024", "2023", "2022"].map((year, index) => <button className={index === 0 ? "active" : ""} key={year}>{year}</button>)}</div>
+      </div>
       <section className="shot-gallery">{gallery.map(([image], index) => <img src={image} alt={`Gallery artwork ${index + 1}`} key={index} />)}</section>
     </>
   );

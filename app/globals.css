@@ -266,11 +266,20 @@ img { display: block; max-width: 100%; }
   background: linear-gradient(#f8fbff, #f5f8fd);
   padding: 0 clamp(16px, 4vw, 64px) 80px;
 }
+.home-gallery {
+  background: #fff;
+  padding: 0 clamp(16px, 4vw, 64px) 88px;
+}
 .home-competitions .page-title {
   padding-top: 74px;
 }
+.home-gallery .page-title {
+  padding-top: 74px;
+}
 .home-competitions .filters,
-.home-competitions .competition-list-grid {
+.home-competitions .competition-list-grid,
+.home-gallery .gallery-filter-panel,
+.home-gallery .shot-gallery {
   max-width: 1180px;
   margin-left: auto;
   margin-right: auto;
@@ -501,35 +510,74 @@ img { display: block; max-width: 100%; }
 }
 .switch-auth { margin: 24px 0 0; text-align: center; color: #667085; font-size: 10px; }
 
-.gallery-tabs {
+.gallery-filter-panel {
+  display: grid;
+  gap: 22px;
+  margin-bottom: 34px;
+}
+.gallery-tabs,
+.gallery-years {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: 14px;
+  flex-wrap: wrap;
 }
-.gallery-tabs button {
-  min-height: 28px;
-  border: 0;
-  border-radius: 4px;
+.gallery-tabs {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(18, 31, 56, .055);
+}
+.gallery-tabs button,
+.gallery-years button {
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   background: transparent;
   color: #667085;
-  padding: 0 14px;
-  font-size: 10px;
-  font-weight: 700;
+  padding: 0 22px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
 }
-.gallery-tabs .active { background: var(--purple); color: #fff; }
+.gallery-tabs button:hover,
+.gallery-years button:hover {
+  color: var(--purple);
+  transform: translateY(-1px);
+}
+.gallery-tabs .active,
+.gallery-years .active {
+  background: var(--purple);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(91, 43, 224, .18);
+}
+.gallery-years button {
+  min-height: 38px;
+  background: #fff;
+  border-color: var(--line);
+  box-shadow: 0 8px 22px rgba(18, 31, 56, .04);
+}
 .shot-gallery {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  max-width: 620px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
   margin: 0 auto;
 }
 .shot-gallery img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 12px;
+  background: #eef2f8;
+  box-shadow: 0 16px 34px rgba(18, 31, 56, .1);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.shot-gallery img:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 46px rgba(18, 31, 56, .14);
 }
 
 .download-card {
@@ -792,6 +840,10 @@ img { display: block; max-width: 100%; }
   .shot-main { padding-inline: 18px; }
   .filters { grid-template-columns: repeat(2, 1fr); }
   .competition-list-grid, .shot-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery-tabs button,
+  .gallery-years button {
+    padding: 0 16px;
+  }
   .detail-layout, .news-layout, .article-layout, .about-card, .auth-card-shot, .contact-shot { grid-template-columns: 1fr; }
   .auth-shot-shell .shot-main {
     align-items: center;
@@ -840,10 +892,41 @@ img { display: block; max-width: 100%; }
   .home-competitions {
     padding: 0 14px 48px;
   }
+  .home-gallery {
+    padding: 0 14px 56px;
+  }
   .home-competitions .page-title {
     padding-top: 42px;
   }
+  .home-gallery .page-title {
+    padding-top: 42px;
+  }
   .filters, .news-filters, .competition-list-grid, .shot-gallery { grid-template-columns: 1fr; }
+  .gallery-filter-panel {
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .gallery-tabs {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .gallery-tabs button {
+    flex: 1;
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  .gallery-years {
+    gap: 8px;
+  }
+  .gallery-years button {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+  .shot-gallery {
+    gap: 18px;
+  }
   .page-title { padding: 34px 0 24px; }
   .filters { gap: 12px; margin-bottom: 22px; }
   .filters input, .filters select { min-height: 50px; font-size: 13px; }
